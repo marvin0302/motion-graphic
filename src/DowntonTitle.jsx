@@ -16,15 +16,13 @@ export function DowntonTitle() {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Phase timings (in frames at 30fps)
-  const accentBarDelay = 0;
   const subTitleDelay = 8;
   const mainTitleDelay = 18;
   const taglineDelay = 38;
   const leafDelay = 48;
 
-  // Accent bar (green bar sliding in from left)
-  const accentBarWidth = interpolate(frame, [accentBarDelay, accentBarDelay + 20], [0, 480], {
+  // Green accent line sliding in from left
+  const accentLineWidth = interpolate(frame, [0, 20], [0, 340], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
@@ -62,7 +60,7 @@ export function DowntonTitle() {
     extrapolateRight: 'clamp',
   });
 
-  // Leaf decorations fade
+  // Leaf fade
   const leafOpacity = interpolate(frame, [leafDelay, leafDelay + 16], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
@@ -82,46 +80,7 @@ export function DowntonTitle() {
         boxSizing: 'border-box',
       }}
     >
-      {/* Card container */}
-      <div
-        style={{
-          position: 'relative',
-          background: 'rgba(12, 147, 71, 0.92)',
-          borderRadius: 4,
-          padding: '32px 48px 36px',
-          minWidth: 560,
-          maxWidth: 720,
-          backdropFilter: 'blur(2px)',
-          boxShadow: '0 8px 40px rgba(0,0,0,0.45)',
-          overflow: 'hidden',
-        }}
-      >
-        {/* White side accent */}
-        <div
-          style={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: 6,
-            background: WHITE,
-            borderRadius: '4px 0 0 4px',
-          }}
-        />
-
-        {/* Decorative top bar */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 3,
-            background: `linear-gradient(90deg, ${WHITE} 0%, rgba(255,255,255,0.3) 100%)`,
-            width: accentBarWidth,
-            overflow: 'hidden',
-          }}
-        />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
 
         {/* Episode label */}
         <div
@@ -131,25 +90,34 @@ export function DowntonTitle() {
             display: 'flex',
             alignItems: 'center',
             gap: 8,
-            marginBottom: 12,
+            marginBottom: 10,
           }}
         >
-          <div style={{ width: 28, height: 2, background: OFF_WHITE, opacity: 0.8 }} />
           <span
             style={{
-              color: OFF_WHITE,
-              fontSize: 13,
-              letterSpacing: '0.22em',
+              color: GREEN,
+              fontSize: 14,
+              letterSpacing: '0.20em',
               fontFamily: "'Arial', sans-serif",
-              fontWeight: 600,
+              fontWeight: 700,
               textTransform: 'uppercase',
-              opacity: 0.9,
+              textShadow: '0 1px 6px rgba(0,0,0,0.6)',
             }}
           >
             Home Renovation Series
           </span>
-          <div style={{ width: 28, height: 2, background: OFF_WHITE, opacity: 0.8 }} />
         </div>
+
+        {/* Green accent line */}
+        <div
+          style={{
+            width: accentLineWidth,
+            height: 3,
+            background: GREEN,
+            marginBottom: 14,
+            borderRadius: 2,
+          }}
+        />
 
         {/* Main title */}
         <div
@@ -157,32 +125,20 @@ export function DowntonTitle() {
             opacity: titleOpacity,
             transform: `scale(${titleScale})`,
             transformOrigin: 'left center',
-            marginBottom: 8,
+            marginBottom: 10,
           }}
         >
           <div
             style={{
               color: WHITE,
-              fontSize: 58,
+              fontSize: 72,
               fontWeight: 700,
-              lineHeight: 1.05,
+              lineHeight: 1.0,
               letterSpacing: '-0.01em',
-              textShadow: '0 2px 12px rgba(0,0,0,0.3)',
+              textShadow: '0 2px 16px rgba(0,0,0,0.7), 0 0 40px rgba(0,0,0,0.4)',
             }}
           >
-            The Downton
-          </div>
-          <div
-            style={{
-              color: WHITE,
-              fontSize: 58,
-              fontWeight: 700,
-              lineHeight: 1.05,
-              letterSpacing: '-0.01em',
-              textShadow: '0 2px 12px rgba(0,0,0,0.3)',
-            }}
-          >
-            Condo
+            The Downton Condo
           </div>
         </div>
 
@@ -193,21 +149,21 @@ export function DowntonTitle() {
             transform: `translateY(${tagY}px)`,
             display: 'flex',
             alignItems: 'center',
-            gap: 10,
-            marginTop: 14,
+            gap: 8,
+            marginTop: 4,
           }}
         >
           <div style={{ opacity: leafOpacity }}>
-            <LeafIcon size={16} color={OFF_WHITE} />
+            <LeafIcon size={15} color={GREEN} />
           </div>
           <span
             style={{
               color: OFF_WHITE,
-              fontSize: 15,
+              fontSize: 18,
               fontFamily: "'Arial', sans-serif",
               fontStyle: 'italic',
-              letterSpacing: '0.04em',
-              opacity: 0.9,
+              letterSpacing: '0.03em',
+              textShadow: '0 1px 8px rgba(0,0,0,0.7)',
             }}
           >
             Transforming spaces, one room at a time
